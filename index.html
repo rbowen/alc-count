@@ -433,13 +433,21 @@ function openDB() {
     });
 }
 
+// Local date helper: returns YYYY-MM-DD in the device's local timezone
+function localDateStr(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+}
+
 async function addDrink(type) {
     const db = await openDB();
     const now = new Date();
     const record = {
         type: type,
-        date: now.toISOString().slice(0, 10),     // YYYY-MM-DD
-        time: now.toISOString().slice(11, 19),     // HH:MM:SS
+        date: localDateStr(now),                   // YYYY-MM-DD local
+        time: now.toLocaleTimeString('en-GB'),     // HH:MM:SS local
         timestamp: now.getTime()
     };
     return new Promise((resolve, reject) => {
@@ -474,7 +482,7 @@ async function getDrinks(startDate, endDate) {
 }
 
 async function getTodayCount() {
-    const today = new Date().toISOString().slice(0, 10);
+    const today = localDateStr(new Date());
     const drinks = await getDrinks(today, today);
     return drinks.length;
 }
@@ -561,7 +569,7 @@ function switchReportTab(tab) {
 }
 
 function dateStr(d) {
-    return d.toISOString().slice(0, 10);
+    return localDateStr(d);
 }
 
 function startOfWeek(d) {

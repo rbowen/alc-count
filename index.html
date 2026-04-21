@@ -324,6 +324,22 @@
 
         .empty-state .emoji { font-size: 2rem; margin-bottom: 12px; }
 
+        /* About overlay - must stack above report */
+        #about-overlay {
+            z-index: 60;
+        }
+
+        .about-btn {
+            background: var(--card);
+            border: none;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            padding: 6px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
         /* Undo bar */
         .undo-bar {
             position: fixed;
@@ -433,8 +449,10 @@
 <div class="report-overlay" id="report-overlay">
     <div class="report-header">
         <h2 id="report-title">Report</h2>
-        <button class="close-btn" onclick="showAbout()" style="font-size:0.85rem; width:auto; padding:0 12px; border-radius:10px;">ℹ️ About</button>
-        <button class="close-btn" onclick="closeReport()">✕</button>
+        <div style="display:flex; gap:8px; align-items:center;">
+            <button class="about-btn" onclick="showAbout()">ℹ️ About</button>
+            <button class="close-btn" onclick="closeReport()">✕</button>
+        </div>
     </div>
     <div class="report-tabs" id="report-tabs">
         <button class="active" onclick="switchReportTab('daily')">Daily</button>
